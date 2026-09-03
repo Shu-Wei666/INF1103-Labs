@@ -4,11 +4,9 @@ print("Welcome here")
 print("My first post !")
 print("=================================")
 
-
 username = "shu wei"
 bio = "Love to watch cdrama"
 followers = 300
-
 
 print("Username:", username)
 print("Bio:", bio)
@@ -26,3 +24,13 @@ print("Day 2:", followers)
 followers -= 10
 print("Day 3:", followers)
 
+#Activity 4
+username = input("Enter Username: ")
+age = input("Enter Age: ")
+category = input("Enter Content Category: ")
+
+print("\nInstagram Profile")
+print("=================================")
+print("Username:", username)
+print("Age:", age)
+print("Category:", category)
