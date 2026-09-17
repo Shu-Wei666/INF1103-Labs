@@ -1,5 +1,3 @@
-total_inventory = 0
-failed_entries = 0
 #Function to get and validate user input
 def get_valid_input():
     stock_quantity = input("Enter the quantity of stock to add (or enter 'quit' to quit): ")
@@ -18,13 +16,16 @@ def get_valid_input():
 
 # Function to add the new delivery to the current inventory
 def process_delivery(current_total, new_value):
-    pass
+    return current_total + new_value
 # Function to calculate 10% tax for a delivery
 def calculate_tax(amount):
     pass
 # Function to generate the final report
 def generate_report(total_units,failed_attempts):
     pass
+total_inventory = 0
+failed_entries = 0
+deliveries_processed = 0
 while True:
     stock_quantity = get_valid_input()
     if stock_quantity.lower() == 'quit': #.lower() covert all letters in a string to lowercase
@@ -32,8 +33,8 @@ while True:
     if stock_quantity is None:
         failed_entries += 1
         continue
-    else:
-        total_inventory += int(stock_quantity)
+    total_inventory = process_delivery(total_inventory, stock_quantity)
+    deliveries_processed += 1
     if total_inventory > 500:
         print("Warning: Total inventory exceeds 500 units! Please review your entries.")
         break
