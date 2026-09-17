@@ -5,11 +5,9 @@ def get_valid_input():
         return "quit"
     if stock_quantity.startswith("-") and stock_quantity[1:].isdigit(): #[1:] is used to slice the string and get the substring starting from index 1 to the end of the string. This is done to check if the rest of the string after the negative sign is a valid number.
         print("Invalid input. Please enter a positive number.")
-        failed_entries += 1
         return None
     elif not stock_quantity.isdigit():
         print("Invalid input. Please enter a valid number.")
-        failed_entries += 1
         return None
     else:
         return int(stock_quantity)    
@@ -34,7 +32,7 @@ deliveries_processed = 0
 while True:
     stock_quantity = get_valid_input()
 
-    if stock_quantity.lower() == 'quit': #.lower() covert all letters in a string to lowercase
+    if stock_quantity == 'quit': 
         break
 
     if stock_quantity is None:
@@ -51,6 +49,6 @@ while True:
         break
 
     print(f"Current Inventory: {total_inventory} units")
-    print(f"Tax for this delivery: {tax}")
-    
+    print(f"Tax for this delivery: $ {tax}")
+
 generate_report(total_inventory,failed_entries)
