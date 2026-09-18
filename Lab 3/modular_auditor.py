@@ -21,9 +21,10 @@ def calculate_tax(amount):
     return amount * 0.10
 
 # Function to generate the final report
-def generate_report(total_units,failed_attempts):
+def generate_report(total_units,failed_attempts,deliveries_processed):
     print(f"Total Units Processed: {total_units}")
     print(f"Number of Failed/Rejected Entries: {failed_attempts}")
+    print(f"Number of deliveries processed: {deliveries_processed}")
 
 total_inventory = 0
 failed_entries = 0
@@ -51,4 +52,4 @@ while True:
     print(f"Current Inventory: {total_inventory} units")
     print(f"Tax for this delivery: $ {tax}")
 
-generate_report(total_inventory,failed_entries)
+generate_report(total_inventory,failed_entries,deliveries_processed)
