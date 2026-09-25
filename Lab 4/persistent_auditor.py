@@ -17,6 +17,15 @@ def load_inventory():
 
     except FileNotFoundError:
         return 0, []
+    
+# Function to save inventory to inventory.txt
+def save_inventory(total_inventory, transaction_history):
+    with open("inventory.txt", "w") as file:
+        file.write(str(total_inventory) + "\n")
+
+        for transaction in transaction_history:
+            file.write(str(transaction) + "\n")
+
 #Function to get and validate user input
 def get_valid_input():
     stock_quantity = input("Enter the quantity of stock to add (or enter 'quit' to quit): ")
@@ -54,6 +63,7 @@ while True:
     stock_quantity = get_valid_input()
 
     if stock_quantity == 'quit': 
+        save_inventory(total_inventory, transaction_history)
         break
 
     if stock_quantity is None:
