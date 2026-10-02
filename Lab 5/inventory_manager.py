@@ -20,7 +20,7 @@ inventory = [
 ]
 
 print(inventory)
-
+# Loop through the list and display every product in the list
 def display_all():
     print("\nCurrent Inventory")
     print("-" * 48)
@@ -35,5 +35,25 @@ def display_all():
 
     print("-" * 48)
 
+# Allow user to add products
+def add_product():
+    print("\nAdd New Product")
 
+    product_id = input("Product ID: ")
+    name = input("Product Name: ")
+    price = float(input("Price: "))
+    stock = int(input("Stock Quantity: "))
+
+    new_product = {
+        "id": product_id,
+        "name": name,
+        "price": price,
+        "stock": stock
+    }
+
+    inventory.append(new_product)
+
+    print("Product added successfully!")
+display_all()
+add_product()
 display_all()
