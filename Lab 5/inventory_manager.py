@@ -1,6 +1,15 @@
 import json
 import os
 inventory = []
+# Allow user to write and update the JSON file
+def save_inventory():
+    print("Saving inventory...")
+
+    with open("inventory.json", "w") as file:
+        json.dump(inventory, file, indent=4)
+
+    print("Inventory saved successfully to inventory.json.")
+# Read the data from JSON
 def load_inventory():
     global inventory
 
@@ -84,3 +93,5 @@ def search_product():
     print("Product not found.")
 load_inventory()
 display_all()
+add_product()
+save_inventory()
