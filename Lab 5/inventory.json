@@ -22,5 +22,11 @@
         "name": "Tablet",
         "price": 900.0,
         "stock": 70
+    },
+    {
+        "id": "P005",
+        "name": "Phone",
+        "price": 1100.0,
+        "stock": 100
     }
 ]
