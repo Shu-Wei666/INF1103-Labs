@@ -20,3 +20,20 @@ inventory = [
 ]
 
 print(inventory)
+
+def display_all():
+    print("\nCurrent Inventory")
+    print("-" * 48)
+
+    for product in inventory:
+        print(
+            f"ID: {product['id']} | "
+            f"Name: {product['name']} | "
+            f"Price: ${product['price']:.2f} | "
+            f"Stock: {product['stock']}"
+        )
+
+    print("-" * 48)
+
+
+display_all()
