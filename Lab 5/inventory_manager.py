@@ -1,25 +1,20 @@
-inventory = [
-    {
-        "id": "P001",
-        "name": "Laptop",
-        "price": 1200.00,
-        "stock": 15
-    },
-    {
-        "id": "P002",
-        "name": "Mouse",
-        "price": 25.50,
-        "stock": 40
-    },
-    {
-        "id": "P003",
-        "name": "Keyboard",
-        "price": 45.00,
-        "stock": 25
-    }
-]
+import json
+import os
+inventory = []
+def load_inventory():
+    global inventory
 
-print(inventory)
+    if os.path.exists("inventory.json"):
+        print("inventory.json found.")
+
+        with open("inventory.json", "r") as file:
+            inventory = json.load(file)
+
+        print("Inventory loaded successfully.")
+
+    else:
+        print("inventory.json not found.")
+        inventory = []
 # Loop through the list and display every product in the list
 def display_all():
     print("\nCurrent Inventory")
@@ -87,4 +82,5 @@ def search_product():
             print("-" * 48)
             return
     print("Product not found.")
-search_product()
+load_inventory()
+display_all()
