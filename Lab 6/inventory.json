@@ -1,38 +1,20 @@
 [
     {
-        "id": "P001",
-        "name": "Laptop",
-        "price": 1200.0,
-        "stock": 15
-    },
-    {
-        "id": "P002",
-        "name": "Mouse",
-        "price": 25.5,
-        "stock": 40
-    },
-    {
-        "id": "P003",
-        "name": "Keyboard",
-        "price": 45.0,
-        "stock": 190
-    },
-    {
         "id": "P004",
-        "name": "Tablet",
-        "price": 900.0,
-        "stock": 70
+        "name": "Monitor",
+        "price": 299.99,
+        "stock": 50
     },
     {
         "id": "P005",
-        "name": "Phone",
-        "price": 1100.0,
+        "name": "Laptop",
+        "price": 1000.0,
         "stock": 100
     },
     {
         "id": "P006",
-        "name": "Headphones",
-        "price": 57.0,
+        "name": "Mouse",
+        "price": 30.0,
         "stock": 67
     }
 ]
