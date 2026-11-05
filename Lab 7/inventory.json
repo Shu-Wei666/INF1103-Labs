@@ -22,5 +22,21 @@
         "stock": 20,
         "type": "digital",
         "download_size": 500.0
+    },
+    {
+        "id": "P020",
+        "name": "Mouse",
+        "price": 50.0,
+        "stock": 10,
+        "type": "physical",
+        "weight": 0.5
+    },
+    {
+        "id": "D020",
+        "name": "Game",
+        "price": 80.0,
+        "stock": 30,
+        "type": "digital",
+        "download_size": 1500.0
     }
 ]
