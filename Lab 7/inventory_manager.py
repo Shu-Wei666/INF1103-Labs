@@ -76,6 +76,12 @@ class PhysicalProduct(Product, CanBeShipped):
         shipping_rate = 2.0
         return self.__weight * shipping_rate
 
+    def to_dict(self):
+        data = super().to_dict()
+        data["type"] = "physical"
+        data["weight"] = self.__weight
+        return data
+
 # DigitalProduct inherits from Product
 class DigitalProduct(Product):
 
@@ -93,6 +99,12 @@ class DigitalProduct(Product):
 
     def get_fulfilment_info(self):
         return "This product is delivered digitally through a download."
+
+    def to_dict(self):
+        data = super().to_dict()
+        data["type"] = "digital"
+        data["download_size"] = self.__download_size
+        return data
 
 # Create Inventory class
 class Inventory:
@@ -142,8 +154,7 @@ def save_inventory(inventory):
 
     print("Inventory saved successfully.")
 
-
-# Load JSON data as Product objects
+# Load JSON data as the correct product subclasses
 def load_inventory(inventory):
     if os.path.exists("inventory.json"):
         print("inventory.json found.")
@@ -152,12 +163,31 @@ def load_inventory(inventory):
             data = json.load(file)
 
         for item in data:
-            product = Product(
-                item["id"],
-                item["name"],
-                item["price"],
-                item["stock"]
-            )
+            product_type = item.get("type")
+
+            if product_type == "physical":
+                product = PhysicalProduct(
+                    item["id"],
+                    item["name"],
+                    item["price"],
+                    item["stock"],
+                    item["weight"]
+                )
+
+            elif product_type == "digital":
+                product = DigitalProduct(
+                    item["id"],
+                    item["name"],
+                    item["price"],
+                    item["stock"],
+                    item["download_size"]
+                )
+
+            else:
+                raise ValueError(
+                    f"Unknown product type for ID {item['id']}: "
+                    f"{product_type}. Update inventory.json."
+                )
 
             inventory.add_product(product)
 
@@ -188,6 +218,14 @@ def main():
 
         elif option == "2":
             print("\nAdd New Product")
+            print("1. Physical Product")
+            print("2. Digital Product")
+
+            product_type = input("Select product type: ").strip()
+
+            if product_type not in ("1", "2"):
+                print("Invalid product type.")
+                continue
 
             product_id = input("Product ID: ").strip()
             name = input("Product Name: ").strip()
@@ -203,9 +241,34 @@ def main():
                 print("Invalid product details.")
                 continue
 
-            new_product = Product(
-                product_id, name, price, stock
-            )
+            try:
+                if product_type == "1":
+                    weight = float(input("Weight (kg): "))
+
+                    if weight <= 0:
+                        print("Weight must be greater than zero.")
+                        continue
+
+                    new_product = PhysicalProduct(
+                        product_id, name, price, stock, weight
+                    )
+
+                elif product_type == "2":
+                    download_size = float(
+                        input("Download Size (MB): ")
+                    )
+
+                    if download_size <= 0:
+                        print("Download size must be greater than zero.")
+                        continue
+
+                    new_product = DigitalProduct(
+                        product_id, name, price, stock, download_size
+                    )
+
+            except ValueError:
+                print("Invalid weight or download size.")
+                continue
 
             if inventory.add_product(new_product):
                 print("Product added successfully!")
