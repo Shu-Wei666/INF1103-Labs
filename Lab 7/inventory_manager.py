@@ -1,14 +1,7 @@
 import json
 import os
-from abc import ABC, abstractmethod
 from product import Product
-
-# Interface for products that can be shipped
-class CanBeShipped(ABC):
-
-    @abstractmethod
-    def calculate_shipping_cost(self):
-        pass
+from can_be_shipped import CanBeShipped
 
 # PhysicalProduct inherits from Product
 class PhysicalProduct(Product, CanBeShipped):
