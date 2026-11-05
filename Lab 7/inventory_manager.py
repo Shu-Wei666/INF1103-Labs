@@ -1,7 +1,9 @@
 import json
 import os
+from abc import ABC, abstractmethod
+
 # Create Product class
-class Product:
+class Product(ABC):
     def __init__(self, product_id, name, price, stock):
         self.__product_id = product_id
         self.__name = name
@@ -41,6 +43,10 @@ class Product:
             "stock": self.__stock
         }
 
+    @abstractmethod
+    def get_fulfilment_info(self):
+        pass
+
 # PhysicalProduct inherits from Product
 class PhysicalProduct(Product):
 
@@ -56,6 +62,9 @@ class PhysicalProduct(Product):
         super().display_information()
         print(f"Weight: {self.__weight:.2f} kg")
 
+    def get_fulfilment_info(self):
+        return "This product requires physical shipping."
+
 # DigitalProduct inherits from Product
 class DigitalProduct(Product):
 
@@ -70,7 +79,10 @@ class DigitalProduct(Product):
     def display_information(self):
         super().display_information()
         print(f"Download Size: {self.__download_size:.2f} MB") 
-          
+
+    def get_fulfilment_info(self):
+        return "This product is delivered digitally through a download."
+
 # Create Inventory class
 class Inventory:
     def __init__(self):
