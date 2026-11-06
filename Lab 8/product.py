@@ -20,6 +20,10 @@ class Product(ABC):
         return self.__name
 
     @property
+    def price(self) -> float:
+        return self.__price
+
+    @property
     def stock(self):
         return self.__stock
 
