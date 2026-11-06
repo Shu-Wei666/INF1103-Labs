@@ -7,7 +7,7 @@ from digital_product import DigitalProduct
 from inventory import Inventory
 
 # Save Product objects to JSON
-def save_inventory(inventory):
+def save_inventory(inventory) -> None:
     print("Saving inventory...")
 
     data = []
@@ -21,7 +21,7 @@ def save_inventory(inventory):
     print("Inventory saved successfully.")
 
 # Load JSON data as the correct product subclasses
-def load_inventory(inventory):
+def load_inventory(inventory) -> None:
     if os.path.exists("inventory.json"):
         print("inventory.json found.")
 
@@ -63,7 +63,7 @@ def load_inventory(inventory):
         print("inventory.json not found.")
 
 # Display menu for user 
-def main():
+def main() -> None:
     inventory = Inventory()
     load_inventory(inventory)
 

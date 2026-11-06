@@ -6,14 +6,14 @@ class Inventory:
     def __init__(self):
         self.__products: list[Product] = []
 
-    def add_product(self, product: Product):
+    def add_product(self, product: Product) -> bool:
         if self.find_product(product.product_id) is not None:
             return False
 
         self.__products.append(product)
         return True
 
-    def remove_product(self, product_id: str):
+    def remove_product(self, product_id: str) -> bool:
         for product in self.__products:
             if product.product_id == product_id:
                 self.__products.remove(product)

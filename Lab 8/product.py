@@ -4,7 +4,7 @@ from supplier import Supplier
 # Create Product class
 class Product(ABC):
     def __init__(self, product_id: str, name: str, price: float,
-             stock: int, supplier: Supplier):
+             stock: int, supplier: Supplier) -> None:
         self.__product_id = product_id
         self.__name = name
         self.__price = float(price)
@@ -12,11 +12,11 @@ class Product(ABC):
         self.__supplier: Supplier = supplier
 
     @property
-    def product_id(self):
+    def product_id(self) -> str:
         return self.__product_id
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__name
 
     @property
@@ -24,19 +24,19 @@ class Product(ABC):
         return self.__price
 
     @property
-    def stock(self):
+    def stock(self) -> int:
         return self.__stock
 
     @property
     def supplier(self) -> Supplier:
         return self.__supplier
 
-    def update_stock(self, quantity):
+    def update_stock(self, quantity) -> None:
         if quantity < 0:
             raise ValueError("Stock cannot be negative.")
         self.__stock = quantity
 
-    def display_information(self):
+    def display_information(self) -> None:
         print(
             f"ID: {self.__product_id} | "
             f"Name: {self.__name} | "
@@ -46,7 +46,7 @@ class Product(ABC):
         print(f"Supplier: {self.__supplier.name}")
         print(f"Supplier Email: {self.__supplier.contact_email}")
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, str | float | int]:
         return {
             "id": self.__product_id,
             "name": self.__name,
@@ -55,5 +55,5 @@ class Product(ABC):
         }
 
     @abstractmethod
-    def get_fulfilment_info(self):
+    def get_fulfilment_info(self) -> str:
         pass
