@@ -1,0 +1,42 @@
+[
+    {
+        "id": "P009",
+        "name": "Computer",
+        "price": 2000.0,
+        "stock": 45,
+        "type": "physical",
+        "weight": 5.0
+    },
+    {
+        "id": "P010",
+        "name": "Laptop",
+        "price": 1500.0,
+        "stock": 10,
+        "type": "physical",
+        "weight": 2.5
+    },
+    {
+        "id": "D001",
+        "name": "Software",
+        "price": 150.0,
+        "stock": 20,
+        "type": "digital",
+        "download_size": 500.0
+    },
+    {
+        "id": "P020",
+        "name": "Mouse",
+        "price": 50.0,
+        "stock": 10,
+        "type": "physical",
+        "weight": 0.5
+    },
+    {
+        "id": "D020",
+        "name": "Game",
+        "price": 80.0,
+        "stock": 30,
+        "type": "digital",
+        "download_size": 1500.0
+    }
+]
