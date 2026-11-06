@@ -1,12 +1,15 @@
 from abc import ABC, abstractmethod
+from supplier import Supplier
 
 # Create Product class
 class Product(ABC):
-    def __init__(self, product_id, name, price, stock):
+    def __init__(self, product_id: str, name: str, price: float,
+             stock: int, supplier: Supplier):
         self.__product_id = product_id
         self.__name = name
         self.__price = float(price)
         self.__stock = int(stock)
+        self.__supplier: Supplier = supplier
 
     @property
     def product_id(self):
@@ -20,6 +23,10 @@ class Product(ABC):
     def stock(self):
         return self.__stock
 
+    @property
+    def supplier(self) -> Supplier:
+        return self.__supplier
+
     def update_stock(self, quantity):
         if quantity < 0:
             raise ValueError("Stock cannot be negative.")
@@ -32,6 +39,8 @@ class Product(ABC):
             f"Price: ${self.__price:.2f} | "
             f"Stock: {self.__stock}"
         )
+        print(f"Supplier: {self.__supplier.name}")
+        print(f"Supplier Email: {self.__supplier.contact_email}")
 
     def to_dict(self):
         return {
