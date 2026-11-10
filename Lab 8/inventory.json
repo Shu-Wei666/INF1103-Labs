@@ -4,6 +4,11 @@
         "name": "Computer",
         "price": 2000.0,
         "stock": 45,
+        "supplier": {
+            "supplier_id": "S000",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "physical",
         "weight": 5.0
     },
@@ -12,6 +17,11 @@
         "name": "Laptop",
         "price": 1500.0,
         "stock": 10,
+        "supplier": {
+            "supplier_id": "S000",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "physical",
         "weight": 2.5
     },
@@ -20,6 +30,11 @@
         "name": "Software",
         "price": 150.0,
         "stock": 20,
+        "supplier": {
+            "supplier_id": "S000",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "digital",
         "download_size": 500.0
     },
@@ -28,6 +43,11 @@
         "name": "Mouse",
         "price": 50.0,
         "stock": 10,
+        "supplier": {
+            "supplier_id": "S000",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "physical",
         "weight": 0.5
     },
@@ -36,7 +56,25 @@
         "name": "Game",
         "price": 80.0,
         "stock": 30,
+        "supplier": {
+            "supplier_id": "S000",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        },
         "type": "digital",
         "download_size": 1500.0
+    },
+    {
+        "id": "P999",
+        "name": "Keyboard",
+        "price": 90.0,
+        "stock": 20,
+        "supplier": {
+            "supplier_id": "S001",
+            "name": "ABC Supplies",
+            "contact_email": "sales@example.com"
+        },
+        "type": "physical",
+        "weight": 1.0
     }
 ]
