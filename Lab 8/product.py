@@ -46,14 +46,19 @@ class Product(ABC):
         print(f"Supplier: {self.__supplier.name}")
         print(f"Supplier Email: {self.__supplier.contact_email}")
 
-    def to_dict(self) -> dict[str, str | float | int]:
+    def to_dict(self) -> dict[str, object]:
         return {
             "id": self.__product_id,
             "name": self.__name,
             "price": self.__price,
-            "stock": self.__stock
+            "stock": self.__stock,
+            "supplier": {
+                "supplier_id": self.__supplier.supplier_id,
+                "name": self.__supplier.name,
+                "contact_email": self.__supplier.contact_email
+            }
         }
-
+    
     @abstractmethod
     def get_fulfilment_info(self) -> str:
         pass

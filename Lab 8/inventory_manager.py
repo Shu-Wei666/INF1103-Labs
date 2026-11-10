@@ -5,6 +5,7 @@ from can_be_shipped import CanBeShipped
 from physical_product import PhysicalProduct
 from digital_product import DigitalProduct
 from inventory import Inventory
+from supplier import Supplier
 
 # Save Product objects to JSON
 def save_inventory(inventory) -> None:
@@ -21,46 +22,68 @@ def save_inventory(inventory) -> None:
     print("Inventory saved successfully.")
 
 # Load JSON data as the correct product subclasses
-def load_inventory(inventory) -> None:
-    if os.path.exists("inventory.json"):
-        print("inventory.json found.")
 
-        with open("inventory.json", "r") as file:
-            data = json.load(file)
-
-        for item in data:
-            product_type = item.get("type")
-
-            if product_type == "physical":
-                product = PhysicalProduct(
-                    item["id"],
-                    item["name"],
-                    item["price"],
-                    item["stock"],
-                    item["weight"]
-                )
-
-            elif product_type == "digital":
-                product = DigitalProduct(
-                    item["id"],
-                    item["name"],
-                    item["price"],
-                    item["stock"],
-                    item["download_size"]
-                )
-
-            else:
-                raise ValueError(
-                    f"Unknown product type for ID {item['id']}: "
-                    f"{product_type}. Update inventory.json."
-                )
-
-            inventory.add_product(product)
-
-        print("Inventory loaded successfully.")
-
-    else:
+def load_inventory(inventory: Inventory) -> None:
+    if not os.path.exists("inventory.json"):
         print("inventory.json not found.")
+        return
+
+    print("inventory.json found.")
+
+    with open("inventory.json", "r", encoding="utf-8") as file:
+        data = json.load(file)
+
+    # Keep one Supplier object for each Supplier ID
+    suppliers: dict[str, Supplier] = {}
+
+    for item in data:
+        # Support old Lab 7 JSON records without suppliers
+        supplier_data = item.get("supplier") or {
+            "supplier_id": "S000",
+            "name": "Unassigned Supplier",
+            "contact_email": ""
+        }
+
+        supplier_id = supplier_data["supplier_id"]
+
+        if supplier_id not in suppliers:
+            suppliers[supplier_id] = Supplier(
+                supplier_id,
+                supplier_data["name"],
+                supplier_data["contact_email"]
+            )
+
+        supplier = suppliers[supplier_id]
+
+        # Create the correct subclass
+        if item.get("type") == "physical":
+            product = PhysicalProduct(
+                item["id"],
+                item["name"],
+                item["price"],
+                item["stock"],
+                item["weight"],
+                supplier
+            )
+
+        elif item.get("type") == "digital":
+            product = DigitalProduct(
+                item["id"],
+                item["name"],
+                item["price"],
+                item["stock"],
+                item["download_size"],
+                supplier
+            )
+
+        else:
+            raise ValueError(
+                f"Unknown product type: {item.get('type')}"
+            )
+
+        inventory.add_product(product)
+
+    print("Inventory loaded successfully.")
 
 # Display menu for user 
 def main() -> None:
@@ -107,6 +130,37 @@ def main() -> None:
                 print("Invalid product details.")
                 continue
 
+
+            # Ask for the supplier
+            supplier_id = input("Supplier ID: ").strip()
+
+            if not supplier_id:
+                print("Supplier ID cannot be empty.")
+                continue
+
+            # Check if supplier already exists
+            supplier = next(
+                (p.supplier for p in inventory.get_products()
+                if p.supplier.supplier_id == supplier_id),
+                None
+            )
+
+            if supplier is None:
+                supplier_name = input("Supplier Name: ").strip()
+                supplier_email = input("Supplier Email: ").strip()
+
+                if not supplier_name:
+                    print("Supplier Name cannot be empty.")
+                    continue
+
+                supplier = Supplier(
+                    supplier_id,
+                    supplier_name,
+                    supplier_email
+                )
+            else:
+                print(f"Using existing supplier: {supplier.name}")
+
             try:
                 if product_type == "1":
                     weight = float(input("Weight (kg): "))
@@ -116,7 +170,7 @@ def main() -> None:
                         continue
 
                     new_product = PhysicalProduct(
-                        product_id, name, price, stock, weight
+                        product_id, name, price, stock, weight, supplier
                     )
 
                 elif product_type == "2":
@@ -129,7 +183,7 @@ def main() -> None:
                         continue
 
                     new_product = DigitalProduct(
-                        product_id, name, price, stock, download_size
+                        product_id, name, price, stock, download_size, supplier
                     )
 
             except ValueError:

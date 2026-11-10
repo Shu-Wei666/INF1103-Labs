@@ -25,7 +25,7 @@ class PhysicalProduct(Product, CanBeShipped):
         shipping_rate = 2.0
         return self.__weight * shipping_rate
 
-    def to_dict(self) -> dict[str, str | float | int]:
+    def to_dict(self) -> dict[str, object]:
         data = super().to_dict()
         data["type"] = "physical"
         data["weight"] = self.__weight
