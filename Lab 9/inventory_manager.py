@@ -5,6 +5,7 @@ from can_be_shipped import CanBeShipped
 from product_factory import ProductFactory
 from inventory import Inventory
 from supplier import Supplier
+from input_helpers import get_positive_float
 
 # Save Product objects to JSON
 def save_inventory(inventory) -> None:
@@ -104,12 +105,20 @@ def main() -> None:
             product_id = input("Product ID: ").strip()
             name = input("Product Name: ").strip()
 
-            try:
-                price = float(input("Price: "))
-                stock = int(input("Stock Quantity: "))
-            except ValueError:
-                print("Invalid price or stock.")
-                continue
+            price = get_positive_float("Price: ")
+
+            while True:
+                try:
+                    stock = int(input("Stock Quantity: "))
+
+                    if stock < 0:
+                        print("Stock cannot be negative.")
+                        continue
+
+                    break
+
+                except ValueError:
+                    print("Please enter a whole number for stock.")
 
             if not product_id or not name or price <= 0 or stock < 0:
                 print("Invalid product details.")
