@@ -4,8 +4,7 @@ import os
 import tempfile
 
 from supplier import Supplier
-from physical_product import PhysicalProduct
-from digital_product import DigitalProduct
+from product_factory import ProductFactory
 from inventory import Inventory
 from order import Order
 from inventory_manager import load_inventory, save_inventory
@@ -57,14 +56,26 @@ with tempfile.TemporaryDirectory() as temp_dir:
         )
 
         inventory.add_product(
-            PhysicalProduct(
-                "P002", "Keyboard", 90.0, 5, 1.0, supplier
+            ProductFactory.create(
+                "physical",
+                "P002",
+                "Keyboard",
+                90.0,
+                5,
+                supplier,
+                weight=1.0
             )
         )
 
         inventory.add_product(
-            DigitalProduct(
-                "D002", "App", 20.0, 3, 100.0, supplier
+            ProductFactory.create(
+                "digital",
+                "D002",
+                "App",
+                20.0,
+                3,
+                supplier,
+                download_size=100.0
             )
         )
 

@@ -1,8 +1,7 @@
 
 from product import Product
 from supplier import Supplier
-from physical_product import PhysicalProduct
-from digital_product import DigitalProduct
+from product_factory import ProductFactory
 from inventory import Inventory
 
 
@@ -15,14 +14,24 @@ def show_product_details(product: Product) -> None:
 # Create Supplier
 supplier = Supplier("S001", "ABC Supplies", "sales@example.com")
 
-# Create PhysicalProduct
-physical = PhysicalProduct(
-    "P001", "Mouse", 50.0, 10, 0.5, supplier
+physical = ProductFactory.create(
+    "physical",
+    "P001",
+    "Mouse",
+    50.0,
+    10,
+    supplier,
+    weight=0.5
 )
 
-# Create DigitalProduct
-digital = DigitalProduct(
-    "D001", "Game", 80.0, 30, 1500.0, supplier
+digital = ProductFactory.create(
+    "digital",
+    "D001",
+    "Game",
+    80.0,
+    30,
+    supplier,
+    download_size=1500.0
 )
 
 # Test 1: Pass PhysicalProduct to the same function

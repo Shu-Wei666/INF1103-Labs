@@ -1,7 +1,7 @@
 import unittest
 
 from supplier import Supplier
-from physical_product import PhysicalProduct
+from product_factory import ProductFactory
 from order import Order
 from no_discount import NoDiscount
 from percentage_discount import PercentageDiscount
@@ -17,15 +17,16 @@ class TestDiscountStrategies(unittest.TestCase):
             "sales@example.com"
         )
 
-        self.product = PhysicalProduct(
-            "P001",
-            "Desk",
-            125.0,
-            10,
-            5.0,
-            self.supplier
+        self.product = ProductFactory.create(
+            product_type="physical",
+            product_id="P001",
+            name="Desk",
+            price=125.0,
+            stock_quantity=10,
+            supplier=self.supplier,
+            weight=5.0
         )
-
+        
     def make_order(self, discount=None) -> Order:
         order = Order("O001", discount)
         order.add_order_line(self.product, 2)

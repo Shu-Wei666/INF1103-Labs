@@ -2,8 +2,7 @@ import json
 import os
 from product import Product
 from can_be_shipped import CanBeShipped
-from physical_product import PhysicalProduct
-from digital_product import DigitalProduct
+from product_factory import ProductFactory
 from inventory import Inventory
 from supplier import Supplier
 
@@ -55,31 +54,17 @@ def load_inventory(inventory: Inventory) -> None:
 
         supplier = suppliers[supplier_id]
 
-        # Create the correct subclass
-        if item.get("type") == "physical":
-            product = PhysicalProduct(
-                item["id"],
-                item["name"],
-                item["price"],
-                item["stock"],
-                item["weight"],
-                supplier
-            )
-
-        elif item.get("type") == "digital":
-            product = DigitalProduct(
-                item["id"],
-                item["name"],
-                item["price"],
-                item["stock"],
-                item["download_size"],
-                supplier
-            )
-
-        else:
-            raise ValueError(
-                f"Unknown product type: {item.get('type')}"
-            )
+        # Ask the factory to create the correct product.
+        product = ProductFactory.create(
+            product_type=item.get("type", ""),
+            product_id=item["id"],
+            name=item["name"],
+            price=item["price"],
+            stock_quantity=item["stock"],
+            supplier=supplier,
+            weight=item.get("weight", 1.0),
+            download_size=item.get("download_size", 1.0)
+        )
 
         inventory.add_product(product)
 
@@ -169,8 +154,14 @@ def main() -> None:
                         print("Weight must be greater than zero.")
                         continue
 
-                    new_product = PhysicalProduct(
-                        product_id, name, price, stock, weight, supplier
+                    new_product = ProductFactory.create(
+                        product_type="physical",
+                        product_id=product_id,
+                        name=name,
+                        price=price,
+                        stock_quantity=stock,
+                        supplier=supplier,
+                        weight=weight
                     )
 
                 elif product_type == "2":
@@ -179,15 +170,23 @@ def main() -> None:
                     )
 
                     if download_size <= 0:
-                        print("Download size must be greater than zero.")
+                        print(
+                            "Download size must be greater than zero."
+                        )
                         continue
 
-                    new_product = DigitalProduct(
-                        product_id, name, price, stock, download_size, supplier
+                    new_product = ProductFactory.create(
+                        product_type="digital",
+                        product_id=product_id,
+                        name=name,
+                        price=price,
+                        stock_quantity=stock,
+                        supplier=supplier,
+                        download_size=download_size
                     )
 
-            except ValueError:
-                print("Invalid weight or download size.")
+            except ValueError as error:
+                print(f"Could not add product: {error}")
                 continue
 
             if inventory.add_product(new_product):

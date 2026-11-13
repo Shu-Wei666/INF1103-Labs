@@ -1,14 +1,29 @@
-
 from supplier import Supplier
-from physical_product import PhysicalProduct
-from digital_product import DigitalProduct
+from product_factory import ProductFactory
 
 # Create a Supplier independently
 supplier = Supplier("S001", "ABC Supplies", "sales@example.com")
 
 # Create products associated with the same Supplier
-physical = PhysicalProduct("P001", "Mouse", 50.0, 10, 0.5, supplier)
-digital = DigitalProduct("D001", "Game", 80.0, 30, 1500.0, supplier)
+physical = ProductFactory.create(
+    "physical",
+    "P001",
+    "Mouse",
+    50.0,
+    10,
+    supplier,
+    weight=0.5
+)
+
+digital = ProductFactory.create(
+    "digital",
+    "D001",
+    "Game",
+    80.0,
+    30,
+    supplier,
+    download_size=1500.0
+)
 
 print("Before deleting supplier variable:")
 physical.display_information()

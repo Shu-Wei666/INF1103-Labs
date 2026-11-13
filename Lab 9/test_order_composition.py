@@ -1,7 +1,6 @@
 
 from supplier import Supplier
-from physical_product import PhysicalProduct
-from digital_product import DigitalProduct
+from product_factory import ProductFactory
 from order import Order
 
 
@@ -9,12 +8,24 @@ from order import Order
 supplier = Supplier("S001", "ABC Supplies", "sales@example.com")
 
 # Create Products
-mouse = PhysicalProduct(
-    "P001", "Mouse", 50.0, 10, 0.5, supplier
+mouse = ProductFactory.create(
+    "physical",
+    "P001",
+    "Mouse",
+    50.0,
+    10,
+    supplier,
+    weight=0.5
 )
 
-game = DigitalProduct(
-    "D001", "Game", 80.0, 30, 1500.0, supplier
+game = ProductFactory.create(
+    "digital",
+    "D001",
+    "Game",
+    80.0,
+    30,
+    supplier,
+    download_size=1500.0
 )
 
 # Create first Order

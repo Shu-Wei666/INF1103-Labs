@@ -1,14 +1,19 @@
 
 from supplier import Supplier
-from physical_product import PhysicalProduct
+from product_factory import ProductFactory
 from inventory import Inventory
 
 # Create a Supplier
 supplier = Supplier("S001", "ABC Supplies", "sales@example.com")
 
-# Create a Product independently
-product = PhysicalProduct(
-    "P001", "Mouse", 50.0, 10, 0.5, supplier
+product = ProductFactory.create(
+    "physical",
+    "P001",
+    "Mouse",
+    50.0,
+    10,
+    supplier,
+    weight=0.5
 )
 
 # Create two inventories
