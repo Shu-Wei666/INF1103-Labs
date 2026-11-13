@@ -3,11 +3,32 @@ from supplier import Supplier
 
 # Create Product class
 class Product(ABC):
-    def __init__(self, product_id: str, name: str, price: float,
-             stock: int, supplier: Supplier) -> None:
+    def __init__(
+        self,
+        product_id: str,
+        name: str,
+        price: float,
+        stock: int,
+        supplier: Supplier
+    ) -> None:
+        # Convert price before validating it.
+        price = float(price)
+
+        if price <= 0:
+            raise ValueError(
+                "Price must be greater than zero."
+            )
+
+        # Check before converting so negative fractions
+        # cannot be silently converted to zero.
+        if stock < 0:
+            raise ValueError(
+                "Stock cannot be negative."
+            )
+
         self.__product_id = product_id
         self.__name = name
-        self.__price = float(price)
+        self.__price = price
         self.__stock = int(stock)
         self.__supplier: Supplier = supplier
 

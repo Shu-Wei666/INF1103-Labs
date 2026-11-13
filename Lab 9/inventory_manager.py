@@ -111,7 +111,7 @@ def main() -> None:
                 print("Invalid price or stock.")
                 continue
 
-            if not product_id or not name or price < 0 or stock < 0:
+            if not product_id or not name or price <= 0 or stock < 0:
                 print("Invalid product details.")
                 continue
 
